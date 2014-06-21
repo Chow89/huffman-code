@@ -1,4 +1,5 @@
 import math
+from binarytree import BinaryTree
 
 
 def int2bin(dec):
@@ -9,12 +10,12 @@ def int2bin(dec):
     return str(dec) + r
 
 
-def isin(collection, key):
-    i = 0
-    for e in collection:
-        if e[0] == key:
-            return i
-        i += 1
+def getindex(collection, key):
+    index = 0
+    for elem in collection:
+        if elem[0] == key:
+            return index
+        index += 1
     return -1
 
 
@@ -23,17 +24,20 @@ l = []
 ignore = [' ', '.', ',', ';', '!', '?', '"', "'"]
 for c in text:
     if c not in ignore:
-        x = isin(l, c)
+        x = getindex(l, c)
         if x != -1:
-            t = (c, l[x][1] + 1)
+            new_tuple = (c, l[x][1] + 1)
             l.remove((c, l[x][1]))
-            l.append(t)
+            l.append(new_tuple)
         else:
             l.append((c, 1))
 
-sorted_l = sorted(l, key=lambda e: e[1], reverse=True)
+sorted_l = sorted(l, key=lambda t: t[1], reverse=True)
 print(sorted_l)
+b = BinaryTree('root', None, None)
 i = 0
 for e in sorted_l:
     print(e[0]+": "+int2bin(i))
+    b.insert(e[0], int2bin(i))
     i += 1
+print(b)
